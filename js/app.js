@@ -33,6 +33,8 @@
     sun: svg('<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>', 20),
     moon: svg('<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/>', 20),
     auto: svg('<circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18Z" fill="currentColor"/>', 20),
+    book: svg('<path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/><path d="M9 7h6"/>', 16, 'class="ch-icon"'),
+    page: svg('<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>', 15, 'class="sc-icon"'),
   };
 
   // ---------- Data model ----------
@@ -290,7 +292,7 @@ Happy writing.`, 'How the app works.', 'final'),
   function sceneItemHTML(s) {
     return `<li class="scene-item ${s.id === state.currentSceneId ? 'active' : ''}" data-sort-item data-type="scene" data-id="${esc(s.id)}">
       <span class="handle" data-drag="scene" title="Drag to reorder">${ICONS.grip}</span>
-      <button class="scene-link" data-act="open-scene"><span class="dot status-${s.status}"></span><span class="scene-name">${esc(s.title) || 'Untitled scene'}</span></button>
+      <button class="scene-link" data-act="open-scene">${ICONS.page}<span class="scene-name">${esc(s.title) || 'Untitled scene'}</span><span class="dot status-${s.status}" title="${esc(s.status)}"></span></button>
       <span class="wc" data-scene-wc="${esc(s.id)}">${fmt(s.words)}</span>
     </li>`;
   }
@@ -302,7 +304,7 @@ Happy writing.`, 'How the app works.', 'final'),
         <div class="chapter-head">
           <span class="handle" data-drag="chapter" title="Drag to reorder">${ICONS.grip}</span>
           <button class="chev" data-act="toggle-chapter" aria-label="${ch.collapsed ? 'Expand' : 'Collapse'} chapter">${ICONS.chev}</button>
-          <button class="chapter-name" data-act="toggle-chapter">${esc(ch.title) || 'Untitled chapter'}</button>
+          <button class="chapter-name" data-act="toggle-chapter">${ICONS.book}<span class="ch-label">${esc(ch.title) || 'Untitled chapter'}</span></button>
           <span class="wc" data-chapter-wc="${esc(ch.id)}">${fmt(chapterWords(ch))}</span>
           <button class="icon-btn sm" data-act="chapter-menu" aria-label="Chapter options" title="Chapter options">${ICONS.dots}</button>
         </div>
@@ -354,6 +356,7 @@ Happy writing.`, 'How the app works.', 'final'),
     const v = Math.max(0, value);
     const pct = goal > 0 ? Math.min(100, (v / goal) * 100) : 0;
     $('.meter i', node).style.width = pct + '%';
+    node.style.setProperty('--pct', pct.toFixed(1));
     $('.goal-val', node).textContent = goal > 0 ? `${fmt(v)} / ${fmt(goal)}` : fmt(v);
     node.classList.toggle('done', goal > 0 && v >= goal);
   }
