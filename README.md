@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/banner.svg" alt="Book Writer" width="100%"></p>
+<p align="center"><img src="./assets/banner.png" alt="Book Writer" width="100%"></p>
 
 A notes app built for writing books. Organise books into chapters and scenes, write in a distraction-free editor, keep character and location notes, and plan the story in an outline view.
 
